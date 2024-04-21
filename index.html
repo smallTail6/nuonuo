@@ -14,8 +14,12 @@
             background-color: #FCE8F8;
         }
      canvas {
-      position: absolute
+      position: absolute;
      
+    }
+    #bgmusic{
+      position: absolute;
+      display: none;
     }
         #snow-container {
             position: fixed;
@@ -158,18 +162,37 @@
   	<p>糯宝，我们已经在一起</p>
 	<b id="dd"></b> 天 <b id="hh"></b> 小时 <b id="mm"></b> 分钟 <b id="ss"></b> 秒了
     </div>
+    <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
     <script>
-      function autoPlayAudio2() {
-        window.onload = function() {
+      // 方法1: 现在微信官方已经推出了微信JS-SDK, 最好还是不要使用"野生"方式, 因为不知道什么时候就可以不能用了!
+    // http://mp.weixin.qq.com/wiki/7/aaa137b55fb2e0456bf8dd9148dd613f.html
+    // 通过config接口注入权限验证配置后, 在 ready 中 play 一下 audio
+    function autoPlayAudio1() {
+        wx.config({
+            // 配置信息, 即使不正确也能使用 wx.ready
+            debug: false,
+            appId: '',
+            timestamp: 1,
+            nonceStr: '',
+            signature: '',
+            jsApiList: []
+        });
+        wx.ready(function() {
+            document.getElementById('bgmusic').play();
+        });
+    }
+    //  function autoPlayAudio2() {
+   //     window.onload = function() {
             // alert(typeof WeixinJSBridge);
-            WeixinJSBridge.invoke('getNetworkType', {}, function(e) {
+    //        WeixinJSBridge.invoke('getNetworkType', {}, function(e) {
                 // 在这里拿到 e.err_msg, 这里面就包含了所有的网络类型
                 // alert(e.err_msg);
-                document.getElementById('bgmusic').play();
-            });
-        };
-    }
-    autoPlayAudio2();
+    //            document.getElementById('bgmusic').play();
+    //        });
+    //    };
+    //}
+    autoPlayAudio1();
+    //autoPlayAudio2();
     </script>
     <script>
         function createSnowflake() {
