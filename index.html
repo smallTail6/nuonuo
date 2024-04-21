@@ -145,6 +145,7 @@
     </style>
 </head>
 <body>
+    <audio src="./music.m4a" autoplay loop></audio>
     <canvas id="fireworksCanvas"></canvas>
     <div id="snow-container"></div>
     <div id="heart" class="heart">
@@ -351,7 +352,7 @@
 		ss.style.transition='color 2s ';
 		ss.style.color='rgb(253, 99, 125)';
 		time.style.transform='translateX(-97px)';
-   
+    
                }, 800);
     cake.style.transform='translateY(20px)';
     animate();
@@ -365,6 +366,6 @@
    	setInterval(createFireworks,1300);   // 每3秒触发一次烟花效果
  	 });
   </script>
-  <audio src="music.m4a" autoplay loop></audio>
+  
 </body>
 </html>
