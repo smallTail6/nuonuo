@@ -145,7 +145,7 @@
     </style>
 </head>
 <body>
-   <audio src="./music.mp3" autoplay loop></audio>
+   <audio id="bgmusic" src="./music.mp3" autoplay loop></audio>
     <canvas id="fireworksCanvas"></canvas>
     <div id="snow-container"></div>
     <div id="heart" class="heart">
@@ -158,6 +158,19 @@
   	<p>糯宝，我们已经在一起</p>
 	<b id="dd"></b> 天 <b id="hh"></b> 小时 <b id="mm"></b> 分钟 <b id="ss"></b> 秒了
     </div>
+    <script>
+      function autoPlayAudio2() {
+        window.onload = function() {
+            // alert(typeof WeixinJSBridge);
+            WeixinJSBridge.invoke('getNetworkType', {}, function(e) {
+                // 在这里拿到 e.err_msg, 这里面就包含了所有的网络类型
+                // alert(e.err_msg);
+                document.getElementById('bgmusic').play();
+            });
+        };
+    }
+    autoPlayAudio2();
+    </script>
     <script>
         function createSnowflake() {
             const snowflake = document.createElement('div');
