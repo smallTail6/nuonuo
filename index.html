@@ -122,26 +122,26 @@
             }
         }
        #birthday-cake {
- 	    width: 100px;
+ 	        width: 100px;
     	    height: 140px;
-   	    //background-color: green;
-	    position:fixed;
+   	    /*background-color: green;*/
+	        position:fixed;
              
- 	    margin:0px auto;
-	    display: block;
-  	    transition: transform 2s;
- 	    transform: translateY(-50vh);
-               p{
-                   position:fixed;
-                   left: -85px;
- 	    right: 0;
- 	    top: -280px; 
- 	    margin: auto;
-                   text-align:center;
-	       font-size:200px;
-               
-	}
+ 	        margin:0px auto;
+	        display: block;
+  	      transition: transform 2s;
+ 	        transform: translateY(-50vh);
          }
+         #birthday-cake p{
+                  position:fixed;
+                  left: -85px;
+                  right: 0;
+                  top: -280px; 
+                  margin: auto;
+                  text-align:center;
+	                font-size:200px;
+               
+	              }
     </style>
 </head>
 <body>
@@ -256,6 +256,7 @@
  
       update() {
         this.particles.forEach(particle => particle.update());
+        
       }
  
       draw(ctx) {
@@ -273,6 +274,7 @@
         } else {
           firework.update();
           firework.draw(ctx);
+          
         }
       });
  
@@ -339,26 +341,30 @@
 		clearInterval(time1);
         setTimeout(function() {
                 time.innerHTML = ' ';
-		time.innerHTML = '<b id="dd">十       七       祝              糯       糯       生       日       快       乐                                            </b> ';
+		time.innerHTML = '<b id="dd">十 七 祝 糯 糯 生 日 快 乐</b> ';
 	        dd.style.transition='color 2s ';
-                dd.style.color='rgb(253, 99, 125)';
+          dd.style.color='rgb(253, 99, 125)';
 		hh.style.transition='color 2s ';
 		hh.style.color='rgb(253, 99, 125)';
 		mm.style.transition='color 2s ';
 		mm.style.color='rgb(253, 99, 125)';
 		ss.style.transition='color 2s ';
 		ss.style.color='rgb(253, 99, 125)';
-	        
-		
 		time.style.transform='translateX(-97px)';
-
-               }, 500);
-                 cake.style.transform='translateY(20px)';
-		
+   
+               }, 800);
+    cake.style.transform='translateY(20px)';
+    animate();
+		setTimeout(function() {
+         // 启动动画，并定时触发烟花效果
+           createFireworks();
+               }, 1200);
                
-	       	 animate(); // 启动动画，并定时触发烟花效果
-   		 setInterval(createFireworks,500);   // 每3秒触发一次烟花效果
+	    
+      
+   	setInterval(createFireworks,1300);   // 每3秒触发一次烟花效果
  	 });
   </script>
+  <audio src="music.m4a" autoplay loop></audio>
 </body>
 </html>
