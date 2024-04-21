@@ -1,0 +1,364 @@
+ 
+<!DOCTYPE html>
+<html>
+<head>
+    <title>糯糯&十七</title>
+    <style type="text/css">
+        body {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            overflow: hidden;
+            background-color: #FCE8F8;
+        }
+     canvas {
+      position: absolute
+     
+    }
+        #snow-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+ 
+        .snowflake {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background-color: #fff;
+            border-radius: 50%;
+            opacity: 0.8;
+            pointer-events: none;
+            animation: snowfall linear infinite;
+        }
+ 
+        @keyframes snowfall {
+            0% {
+                transform: translateY(-100%);
+            }
+            100% {
+                transform: translateY(148vh);
+            }
+        }
+ 
+        .heart {
+            width: 200px;
+            height: 200px;
+            position: relative;
+            animation: heartbeat 1s infinite;
+            transform-origin: center center;
+            cursor: pointer;
+           transition: opacity 1s;
+        }
+ 
+        .heart:before,
+        .heart:after {
+            content: "";
+            background-color: red;
+            border-radius: 50px 50px 0 0;
+            position: absolute;
+            top: 0;
+        }
+ 
+        .heart:before {
+            left: 100px;
+            width: 100px;
+            height: 160px;
+            transform: rotate(-45deg);
+            transform-origin: 0 100%;
+        }
+ 
+        .heart:after {
+            left: 0;
+            width: 100px;
+            height: 160px;
+            transform: rotate(45deg);
+            transform-origin: 100% 100%;
+        }
+ 
+        #timeElapsed {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 30px;
+  	    transition: transform 2s;
+ 	    transform: translateX(0px);
+            transform: translateY(0px);
+        }
+        #timeElapsed b {
+            color: rgb(253, 99, 125);
+            font-size: 40px;
+         
+
+        }
+        #dd{
+   
+            transition: transform 2s;
+            transform: translateX(0px);
+}
+        @keyframes heartbeat {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.2);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+ 
+        @keyframes falling {
+            0% {
+                transform: translateY(-100vh);
+            }
+            100% {
+                transform: translateY(100vh);
+            }
+        }
+       #birthday-cake {
+ 	    width: 100px;
+    	    height: 140px;
+   	    //background-color: green;
+	    position:fixed;
+             
+ 	    margin:0px auto;
+	    display: block;
+  	    transition: transform 2s;
+ 	    transform: translateY(-50vh);
+               p{
+                   position:fixed;
+                   left: -85px;
+ 	    right: 0;
+ 	    top: -280px; 
+ 	    margin: auto;
+                   text-align:center;
+	       font-size:200px;
+               
+	}
+         }
+    </style>
+</head>
+<body>
+    <canvas id="fireworksCanvas"></canvas>
+    <div id="snow-container"></div>
+    <div id="heart" class="heart">
+     
+    </div>
+    <div id="birthday-cake">
+   	 <p>🎂</p>
+    </div>
+    <div id="timeElapsed">
+  	<p>糯宝，我们已经在一起</p>
+	<b id="dd"></b> 天 <b id="hh"></b> 小时 <b id="mm"></b> 分钟 <b id="ss"></b> 秒了
+    </div>
+    <script>
+        function createSnowflake() {
+            const snowflake = document.createElement('div');
+            snowflake.classList.add('snowflake');
+            snowflake.style.left = Math.random() * window.innerWidth + 'px';
+            snowflake.style.top = -0.5* window.innerHeight + 'px';
+            snowflake.style.animationDuration = Math.random() * 3 + 2.5 + 's';
+            snowflake.style.opacity = Math.random();
+            snowflake.style.fontSize = Math.random() * 10 + 20+ 'px';
+            snowflake.style.textAlign = "center";
+            snowflake.style.lineHeight = snowflake.innerHeight*0.5+"px";
+            const randomColor = getRandomColor();
+            snowflake.style.backgroundColor = randomColor;
+           
+            snowflake.innerHTML = '🎂糯糯&十七永远在一起'; // You can customize the snowflake symbol here
+ 
+            return snowflake;
+        }
+ 
+        function getRandomColor() {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        }
+ 
+        function snowfall() {
+            const snowContainer = document.getElementById('snow-container');
+            const numSnowflakes = 40; // Adjust the number of snowflakes here
+ 
+            for (let i = 0; i < numSnowflakes; i++) {
+                const snowflake = createSnowflake();
+                snowContainer.appendChild(snowflake);
+            }
+        }
+ 
+        snowfall();
+    </script>
+   <script>
+    const canvas = document.getElementById('fireworksCanvas');
+    const ctx = canvas.getContext('2d');
+    let fireworks = [];
+ 
+    // 设置画布大小
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+ 
+    // 监听窗口大小变化
+    window.addEventListener('resize', () => {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    });
+ 
+    class Particle {
+      constructor(x, y, color, velocityX, velocityY) {
+        this.x = x;
+        this.y = y;
+        this.color = color;
+        this.velocityX = velocityX;
+        this.velocityY = velocityY;
+        this.radius = 2.5;
+        this.opacity = 1;
+      }
+ 
+      update() {
+        this.x += this.velocityX;
+        this.y += this.velocityY;
+        this.velocityY += 0.1;
+        this.opacity -= 0.01;
+      }
+ 
+      draw(ctx) {
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.globalAlpha = this.opacity;
+        ctx.shadowBlur = 10;
+        ctx.shadowColor = this.color;
+        ctx.fill();
+      }
+    }
+ 
+    class Firework {
+      constructor(x, y) {
+        this.x = x;
+        this.y = y;
+        this.particles = [];
+        for (let i = 0; i < 50; i++) {
+          const color = `hsl(${Math.random() * 360}, 100%, 50%)`;
+          const velocityX = (Math.random() - 0.5) * 6;
+          const velocityY = Math.random() * -15;
+          this.particles.push(new Particle(x, y, color, velocityX, velocityY));
+        }
+      }
+ 
+      update() {
+        this.particles.forEach(particle => particle.update());
+      }
+ 
+      draw(ctx) {
+        this.particles.forEach(particle => particle.draw(ctx));
+      }
+    }
+ 
+    function animate() {
+     ctx.fillStyle = 'rgba(0, 0, 0, 0.1)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+ 
+      fireworks.forEach((firework, index) => {
+        if (firework.particles[0].opacity <= 0) {
+          fireworks.splice(index, 1);
+        } else {
+          firework.update();
+          firework.draw(ctx);
+        }
+      });
+ 
+      requestAnimationFrame(animate);
+    }
+ 
+    // 生成5个烟花并添加到fireworks数组中
+    function createFireworks() {
+      for (let i = 0; i < 5; i++) {
+        const x = Math.random() * canvas.width;
+        const y = Math.random() * canvas.height;
+        fireworks.push(new Firework(x, y));
+      }
+    }
+         function getTimeElapsed() {
+            var startDate = new Date("2024-03-05"); // 设置开始日期，替换为实际的起始日期
+            var currentDate = new Date();
+            var timeDiff = currentDate - startDate;
+ 
+            var milliseconds = timeDiff % 1000;
+            timeDiff = Math.floor(timeDiff / 1000);
+            var seconds = timeDiff % 60;
+            timeDiff = Math.floor(timeDiff / 60);
+            var minutes = timeDiff % 60;
+            timeDiff = Math.floor(timeDiff / 60);
+            var hours = timeDiff % 24;
+            timeDiff = Math.floor(timeDiff / 24);
+            var days = timeDiff;
+ 
+
+           //var timeString = "在一起 " + days + " 天 " + hours + " 小时 " + minutes + " 分钟 " + seconds + " 秒了";
+ 
+           //document.getElementById("timeElapsed").textContent = timeString;
+            document.getElementById('dd').innerHTML = days;
+            document.getElementById('hh').innerHTML = hours;
+            document.getElementById('mm').innerHTML = minutes;
+            document.getElementById('ss').innerHTML = seconds;
+        }
+        getTimeElapsed();
+       var time1=  setInterval(getTimeElapsed, 1000);
+   
+	document.getElementById('heart').addEventListener('click', function() {
+   	 var cake = document.getElementById('birthday-cake');
+	 var heart = document.getElementById('heart');
+         var time = document.getElementById('timeElapsed');
+         var fireworks =document.getElementById('fireworksCanvas');
+         var dd =document.getElementById('dd');
+	var hh =document.getElementById('hh');
+         var mm =document.getElementById('mm');
+	var ss =document.getElementById('ss');
+  	  cake.style.display = 'block'; 
+                 heart.style.opacity = '0';
+              //setTimeout(function() {
+  	  //heart.style.display = 'none';// 这里是延迟执行的代码
+               //}, 800);
+      
+                 cake.style.transform='translateY(0)';
+		time.style.transform='translateX(-98px)';
+              //fireworks.style.backgroundColor='black';
+                dd.style.color='black';
+		hh.style.color='black';
+		mm.style.color='black';
+		ss.style.color='black';
+		clearInterval(time1);
+        setTimeout(function() {
+                time.innerHTML = ' ';
+		time.innerHTML = '<b id="dd">十       七       祝              糯       糯       生       日       快       乐                                            </b> ';
+	        dd.style.transition='color 2s ';
+                dd.style.color='rgb(253, 99, 125)';
+		hh.style.transition='color 2s ';
+		hh.style.color='rgb(253, 99, 125)';
+		mm.style.transition='color 2s ';
+		mm.style.color='rgb(253, 99, 125)';
+		ss.style.transition='color 2s ';
+		ss.style.color='rgb(253, 99, 125)';
+	        
+		
+		time.style.transform='translateX(-97px)';
+
+               }, 500);
+                 cake.style.transform='translateY(20px)';
+		
+               
+	       	 animate(); // 启动动画，并定时触发烟花效果
+   		 setInterval(createFireworks,500);   // 每3秒触发一次烟花效果
+ 	 });
+  </script>
+</body>
+</html>
