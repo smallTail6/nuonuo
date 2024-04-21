@@ -354,14 +354,15 @@
        var time1=  setInterval(getTimeElapsed, 1000);
    
 	document.getElementById('heart').addEventListener('click', function() {
-   	 var cake = document.getElementById('birthday-cake');
-	 var heart = document.getElementById('heart');
+   	     var cake = document.getElementById('birthday-cake');
+	       var heart = document.getElementById('heart');
          var time = document.getElementById('timeElapsed');
          var fireworks =document.getElementById('fireworksCanvas');
          var dd =document.getElementById('dd');
-	var hh =document.getElementById('hh');
+	       var hh =document.getElementById('hh');
          var mm =document.getElementById('mm');
-	var ss =document.getElementById('ss');
+	       var ss =document.getElementById('ss');
+         var snow = document.getElementById('snow-container');
   	  cake.style.display = 'block'; 
                  heart.style.opacity = '0';
               //setTimeout(function() {
@@ -387,8 +388,10 @@
 		mm.style.color='rgb(253, 99, 125)';
 		ss.style.transition='color 2s ';
 		ss.style.color='rgb(253, 99, 125)';
-		time.style.transform='translateX(-97px)';
-    
+		time.style.transform='translateX(-97px)';   
+if (snow && snow.parentNode) {
+  snow.parentNode.removeChild(snow);
+}
                }, 800);
     cake.style.transform='translateY(20px)';
     animate();
